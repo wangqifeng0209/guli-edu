@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guli.edu.mapper.CourseMapper">
+
+    <select id="getCourseWebVo" resultType="com.guli.edu.entity.dto.CourseWebVo">
+        SELECT c.`id`,c.`title`,c.`price`,c.`lesson_num`,c.`cover`,c.`buy_count`,c.`view_count`,cd.`description`,t.`id` AS 'teacherId',t.`name` AS 'teacherName',t.`intro`,t.`avatar`,s.`id` AS 'subjectId',s.`title` AS 'subjectName'
+        FROM edu_course c
+        LEFT JOIN edu_course_description cd ON c.`id`=cd.`id`
+        LEFT JOIN edu_teacher t ON c.`teacher_id`=t.`id`
+        LEFT JOIN edu_subject s ON c.`subject_id`=s.`id`
+        WHERE c.`id`=#{id}
+
+    </select>
+
+    <select id="getCourseInfo" resultType="com.guli.edu.entity.dto.CourseInfoDto">
+        SELECT c.`id`,c.`title`,c.`price`,c.`cover`,cd.`description`,t.`name`,s.`title` subjectName
+        FROM edu_course c
+        LEFT JOIN edu_course_description cd ON c.id=cd.`id`
+        LEFT JOIN edu_teacher t ON c.`teacher_id`=t.`id`
+        LEFT JOIN edu_subject s ON c.`subject_id`=s.`id`
+        WHERE c.`id`=#{id}
+    </select>
+</mapper>
